@@ -125,7 +125,6 @@ body.dead .cpt {
 .floor,
 .window {
     background-blend-mode: overlay;
-    transition: background 1s ease;
 }
 
 .ceiling,
@@ -368,7 +367,8 @@ a.window[href="#right"] {
 
 .overlay,
 #moose,
-#moose img {
+#moose img,
+.moose-fight {
     display: none;
     position: fixed;
     z-index: 9999;
@@ -386,43 +386,145 @@ a.window[href="#right"] {
     mix-blend-mode: screen !important;
 }
 
-@media screen {
+#moose img {
+    object-fit: contain;
+    object-position: center;
+}
 
-    #moose,
-    #moose img {
-        mix-blend-mode: screen !important;
+.moose-fight {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+a.moose-heart {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #EA2027;
+    text-shadow: 0.15vw 0.15vw 0 #000, -0.15vw -0.15vw 0 #000, -0.15vw 0.15vw 0 #000, -0.15vw 0.15vw 0 #000;
+}
+
+a.moose-heart:hover,
+a.moose-heart:focus,
+a.moose-heart:active {
+    filter: grayscale(100);
+}
+
+a.moose-heart img,
+a.moose-heart span {
+    display: block;
+}
+
+a.moose-heart img {
+    object-fit: contain;
+    object-position: center;
+    width: 7vw;
+    height: 7vw;
+    margin-top: 5vw;
+    margin-bottom: 1vw;
+}
+
+a.moose-heart span {
+    line-height: 120%;
+    font-family: Tahoma, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    font-size: 1vw;
+    letter-spacing: 0.25vw;
+    background: var(--blk75);
+}
+
+.moose-health {
+    margin-top: 2vw;
+    width: 25vw;
+    height: 2vw;
+    background: rgba(255, 255, 255, 0.2);
+    border: 0.15vw solid #fff;
+}
+
+.moose-health-bar {
+    height: 100%;
+    width: 100%;
+    background: #A3CB38;
+}
+
+.moose-health-bar.mid {
+    background: #EE5A24;
+}
+
+.moose-health-bar.low {
+    background: #EA2027;
+}
+
+.attack-door#moose img.moose-door,
+.attack-fire#moose img.moose-fire,
+.attack-window#moose img.moose-window {
+    display: block;
+}
+
+.flicker {
+    animation: erratic-flicker 2s infinite;
+}
+
+@keyframes erratic-flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
     }
 
-    #moose img {
-        object-fit: contain;
-        object-position: center;
+    20%,
+    24%,
+    55% {
+        opacity: 0;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    body {
+        font-size: 5vw;
+        perspective: 50vw;
     }
 
-    .attack-door#moose img.moose-door,
-    .attack-fire#moose img.moose-fire,
-    .attack-window#moose img.moose-window {
-        display: block;
+    .controls {
+        bottom: 2vw;
+        height: 40vw;
+        width: 40vw;
     }
 
-    .flicker {
-        animation: erratic-flicker 2s infinite;
+    .controls a i {
+        width: 7vw;
+        height: 7vw;
     }
 
-    @keyframes erratic-flicker {
-
-        0%,
-        18%,
-        22%,
-        25%,
-        53%,
-        57%,
-        100% {
-            opacity: 1;
-        }
-
-        20%,
-        24%,
-        55% {
-            opacity: 0;
-        }
+    .moose-health {
+        margin-top: 4vw;
+        width: 50vw;
+        height: 4vw;
+        border-width: 0.3vw;
     }
+
+    a.moose-heart img {
+        width: 14vw;
+        height: 14vw;
+    }
+
+    a.moose-heart span {
+        font-size: 2vw;
+    }
+}

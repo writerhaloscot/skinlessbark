@@ -11,3 +11,92 @@ body {
     background: #000;
     color: #fff;
 }
+
+.welcome {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.welcome * {
+    line-height: 120%;
+    letter-spacing: 0.025vw;
+    margin: 0;
+}
+
+.welcome h1 {
+    font-weight: 400;
+    font-size: 4vw;
+}
+
+.welcome h2 {
+    font-weight: 400;
+    font-size: 3.4vw;
+    margin-bottom: 2vw;
+    font-style: italic;
+}
+
+.welcome span {
+    font-weight: 400;
+    display: inline-block;
+    font-size: 5vw;
+    margin-top: -2.5vw;
+}
+
+.welcome a,
+.welcome a:hover,
+.welcome a:focus,
+.welcome a:active {
+    text-decoration: none;
+    outline: none;
+}
+
+.welcome a {
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    font-size: 1vw;
+    letter-spacing: 0.5vw;
+    padding: 1.5vw;
+    border: 0.2vw solid #fff;
+}
+
+.welcome a:hover,
+.welcome a:focus,
+.welcome a:active {
+    background: #fff;
+    color: #000;
+}
+
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .welcome h1 {
+        font-size: 8vw;
+    }
+
+    .welcome h2 {
+        font-size: 6.8vw;
+        margin-bottom: 4vw;
+    }
+
+    .welcome span {
+        margin-top: -1.6vw;
+    }
+
+    .welcome a {
+        font-size: 2vw;
+        letter-spacing: 1vw;
+        padding: 3vw;
+        border-width: 0.4vw;
+    }
+}

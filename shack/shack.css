@@ -383,7 +383,7 @@ a.window[href="#right"] {
 
 #moose,
 #moose img {
-    mix-blend-mode: screen;
+    mix-blend-mode: screen !important;
 }
 
 #moose img {

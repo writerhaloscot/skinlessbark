@@ -55,7 +55,7 @@ $(function () {
         mooseTimer = setTimeout(() => {
             if (moose_health > 15) {
                 alert('You died!');
-                window.location.href = 'https: //writerhaloscot.github.io/skinlessbark/';
+                window.location.replace('https://writerhaloscot.github.io/skinlessbark/');
             }
         }, 5000);
     }

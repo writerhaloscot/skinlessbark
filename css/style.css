@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-family: Times, serif;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    background: #000;
+    color: #fff;
+}

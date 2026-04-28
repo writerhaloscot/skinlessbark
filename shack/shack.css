@@ -1,0 +1,421 @@
+/* SHACK */
+/* https://portswigger.net/research/creating-a-3d-world-in-pure-css */
+/* https://bennettfeely.com/clippy/ */
+
+:root {
+    --speed: 1.5s;
+
+    --temp: rgba(149, 175, 192, 0.7);
+    --tempDim: rgba(149, 175, 192, 0.3);
+    --tempDull: rgba(149, 175, 192, 0.15);
+
+    --blk75: rgba(0, 0, 0, 0.75);
+    --blk50: rgba(0, 0, 0, 0.5);
+}
+
+:root.theme-red {
+    --temp: rgba(232, 65, 24, 0.7);
+    --tempDim: rgba(232, 65, 24, 0.5);
+    --tempDull: rgba(232, 65, 24, 0.15);
+}
+
+:root.theme-green {
+    --temp: rgba(186, 220, 88, 0.7);
+    --tempDim: rgba(186, 220, 88, 0.3);
+    --tempDull: rgba(186, 220, 88, 0.15);
+}
+
+:root.theme-blue {
+    --temp: rgba(0, 0, 255, 0.6);
+    --tempDim: rgba(0, 0, 255, 0.5);
+    --tempDull: rgba(0, 0, 255, 0.15);
+}
+
+body {
+    background-color: #000;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 100%;
+    font-size: 2.25vw;
+    perspective: 25vw;
+    perspective-origin: 50% calc(50% + 5vw);
+    overflow: hidden;
+}
+
+body.dead .controls {
+    display: none;
+}
+
+body.dead .cpt {
+    pointer-events: none;
+}
+
+#shack {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(0) translateZ(0);
+    animation-fill-mode: forwards;
+}
+
+#shack,
+#shack * {
+    box-sizing: border-box;
+}
+
+#shack.turn-left {
+    animation: turnLeft var(--speed);
+    animation-fill-mode: forwards;
+}
+
+#shack.turn-right {
+    animation: turnRight var(--speed);
+    animation-fill-mode: forwards;
+}
+
+#shack.move-forward {
+    animation: moveForward var(--speed);
+    animation-fill-mode: forwards;
+}
+
+#shack.move-back {
+    animation: moveBack var(--speed);
+    animation-fill-mode: forwards;
+}
+
+#shack.reset {
+    animation: sceneReset var(--speed);
+    animation-fill-mode: forwards;
+}
+
+@keyframes turnLeft {
+    100% {
+        transform: rotateY(-25deg) translateZ(0);
+    }
+}
+
+@keyframes turnRight {
+    100% {
+        transform: rotateY(25deg) translateZ(0);
+    }
+}
+
+@keyframes moveForward {
+    100% {
+        transform: rotateY(0deg) translateZ(15vw);
+    }
+}
+
+@keyframes moveBack {
+    100% {
+        transform: rotateY(0deg) translateZ(-10vw);
+    }
+}
+
+@keyframes sceneReset {
+    100% {
+        transform: rotateY(0) translateZ(0);
+    }
+}
+
+.ceiling,
+.wall,
+.floor,
+.window {
+    background-blend-mode: overlay;
+    transition: background 1s ease;
+}
+
+.ceiling,
+.wall {
+    position: absolute;
+    background-color: #ddd;
+    width: 100vw;
+    height: 50vw;
+    top: -25vw;
+    left: -50vw;
+    transform: translateZ(-25vw);
+}
+
+.wall {
+    background: url('../img/pixabay/soramang-white-2172682-min.jpg') center/50vw repeat,
+        linear-gradient(180deg, var(--blk75) 0%, var(--tempDim) 100%) top/cover no-repeat,
+        #777;
+}
+
+.wall.left,
+.wall.right {
+    background-color: #ccc;
+}
+
+.wall.left {
+    right: 0;
+    left: auto;
+    transform: rotateY(-90deg);
+    background: url('../img/pixabay/soramang-white-2172682-min.jpg') center/50vw repeat,
+        linear-gradient(250deg, var(--blk75) 50%, var(--temp) 100%) top/cover no-repeat,
+        #777;
+}
+
+.wall.right {
+    transform: rotateY(90deg);
+    left: 0;
+    background: url('../img/pixabay/soramang-white-2172682-min.jpg') center/50vw repeat,
+        linear-gradient(-250deg, var(--blk75) 50%, var(--temp) 100%) top/cover no-repeat,
+        #777;
+}
+
+.floor {
+    background: url('../img/pixabay/seamlesstextures-brick-6974561-min.jpg') center/12vw round,
+        linear-gradient(0deg, var(--blk50) 50%, var(--temp) 100%) top/cover no-repeat,
+        #777;
+    width: 100vw;
+    height: 50vw;
+    top: 25vw;
+    z-index: 0;
+    position: absolute;
+    transform: translate(-50vw, -25vw) rotateX(90deg) translateZ(0);
+}
+
+.floor.blood:after {
+    content: 'test';
+    background-image: url('../img/pixabay/clker-free-vector-images-ink-303244-min.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    mix-blend-mode: overlay;
+    filter: brightness(0.5);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.ceiling {
+    background: url('../img/pixabay/peggy_marco-texture-1027808-min.jpg') center/12vw round,
+        linear-gradient(0deg, var(--blk50) 0%, var(--tempDim) 100%) top/cover no-repeat,
+        #777;
+    top: 0;
+    left: 0;
+    transform: translate(-50vw, -25vw) rotateX(90deg) translateZ(25vw);
+}
+
+
+
+/* CONTROLS */
+
+.controls,
+.controls div,
+.controls a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1;
+}
+
+.controls {
+    overflow: hidden;
+    flex-direction: column;
+    position: absolute;
+    z-index: 999;
+    bottom: -3.4vw;
+    left: 50%;
+    transform: translateX(-50%) translateZ(-5vw);
+    height: 15vw;
+    width: 15vw;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+}
+
+.controls div {
+    flex-direction: row;
+
+}
+
+.controls a {
+    color: rgba(255, 255, 255, 0.45);
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.controls div a {
+    flex-direction: row;
+}
+
+.controls a i {
+    display: inline-block;
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.controls a:hover,
+.controls a:focus,
+.controls a:active,
+.controls a.active {
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+    border: 0;
+}
+
+
+/* INTERACTIVE COMPONENTS */
+
+.cpt {
+    cursor: pointer;
+    font-size: 0;
+    color: transparent;
+    text-decoration: none;
+}
+
+.cpt:hover,
+.cpt:focus,
+.cpt:active,
+a.window:hover:after,
+a.window:focus:after,
+a.window:active:after {
+    outline: 0.25vw solid yellow;
+    outline-offset: -0.25vw;
+    text-decoration: none;
+}
+
+a.door {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 80% auto;
+    background-position: center bottom;
+    background-image: url('../img/pixabay/pixellabs-ai-generated-9178769-min.png');
+    position: absolute;
+    z-index: 300;
+    bottom: 0;
+    width: 60vw;
+    height: 55vw;
+    left: 0;
+    box-shadow: 0 0 10vw #000, inset 0 -5vw 10vw var(--tempDim);
+}
+
+a.fire {
+    background-image: url('../img/pixabay/jean52photosstock-fireplace-5220559-min.png');
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    position: absolute;
+    bottom: 0;
+    left: 65vw;
+    width: 30vw;
+    height: 20vw;
+    box-shadow: 0 0 10vw #000;
+}
+
+a.window {
+    position: absolute;
+    bottom: 15vw;
+    width: 7vw;
+    height: 15vw;
+}
+
+a.window:after {
+    content: 'test';
+    position: absolute;
+    z-index: 10;
+    top: -1vw;
+    bottom: -1vw;
+    left: -1vw;
+    right: -1vw;
+    background-image: url(../img/pixabay/steinchen-window-621740-L-min.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: inset 1vw 1vw 1vw var(--tempDull);
+}
+
+a.window[href="#right"]:after {
+    background-image: url(../img/pixabay/steinchen-window-621740-R-min.png);
+    box-shadow: inset -1vw 1vw 1vw var(--tempDull);
+}
+
+a.window[href="#left"] {
+    left: 34vw;
+    background: url('../img/pixabay/gricristi-grunge-2937274-L-min.jpg') center/auto 100% no-repeat,
+        linear-gradient(-90deg, var(--blk50) 0%, var(--tempDim) 70%) top/cover no-repeat,
+        #888;
+    box-shadow: inset 2vw 2vw 0 var(--blk50), 0 0 1vw var(--tempDim), 0 0 5vw var(--tempDim);
+}
+
+a.window[href="#right"] {
+    right: 34vw;
+    background: url('../img/pixabay/gricristi-grunge-2937274-R-min.jpg') center/auto 100% no-repeat,
+        linear-gradient(90deg, var(--blk50) 0%, var(--tempDim) 70%) top/cover no-repeat,
+        #888;
+    box-shadow: inset -2vw 2vw 0 var(--blk50), 0 0 1vw var(--tempDim), 0 0 5vw var(--tempDim);
+}
+
+/* MOOSE */
+.overlay {
+    display: none;
+    background-color: var(--blk50);
+    mix-blend-mode: overlay;
+}
+
+.overlay.shade {
+    mix-blend-mode: normal;
+}
+
+.overlay,
+#moose,
+#moose img {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateZ(1vw);
+}
+
+#moose,
+#moose img {
+    mix-blend-mode: screen;
+}
+
+#moose img {
+    object-fit: contain;
+    object-position: center;
+}
+
+.attack-door#moose img.moose-door,
+.attack-fire#moose img.moose-fire,
+.attack-window#moose img.moose-window {
+    display: block;
+}
+
+.flicker {
+    animation: erratic-flicker 2s infinite;
+}
+
+@keyframes erratic-flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0;
+    }
+}

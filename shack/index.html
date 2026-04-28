@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-gray">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Shack | Skinless Bark | Nightmare Productions</title>
+    <meta name="description" content="" />
+
+    <link rel="shortcut icon" type="image/svg+xml" href="../img/pixabay-antlers-7405606.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css?v=1.1" />
+    <link rel="stylesheet" href="shack.css?v=1.156" />
+</head>
+
+<body>
+
+    <div id="shack">
+        <div class="ceiling"></div>
+        <div class="wall front">
+            <a class="cpt door" role="button" aria-label="Door" href="#door">Door</a>
+            <a class="cpt fire" role="button" aria-label="Door" href="#fire">Fire</a>
+        </div>
+        <div class="wall left">
+            <a class="cpt window" aria-label="Left Window" href="#left">Left Window</a>
+        </div>
+        <div class="wall right">
+            <a class="cpt window" aria-label="Right Window" href="#right">Right Window</a>
+        </div>
+        <div class="floor"></div>
+    </div>
+
+    <div class="controls">
+        <a tabindex="1" accesskey="W" href="#move-forward" aria-label="Move Forward">
+            <i class="fa-solid fa-w"></i>
+            <i class="fa-solid fa-chevron-up"></i>
+        </a>
+        <div>
+            <a tabindex="2" accesskey="A" href="#turn-left" aria-label="Turn Left">
+                <i class="fa-solid fa-a"></i>
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+
+            <a tabindex="5" accesskey="Backspace" href="#reset" aria-label="Reset View">
+                <i class="fa-solid fa-backspace"></i>
+            </a>
+            <a tabindex="3" accesskey="D" href="#turn-right" aria-label="Turn Right">
+                <i class="fa-solid fa-chevron-right"></i>
+                <i class="fa-solid fa-d"></i>
+            </a>
+        </div>
+
+        <a tabindex="4" accesskey="S" href="#move-back" aria-label="Move Backward">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-s"></i>
+        </a>
+    </div>
+
+    <div class="overlay"></div>
+    <div class="overlay shade"></div>
+    <div id="moose">
+        <img class="moose-door" src="../img/ai/moose1-min.jpg" alt="Moose" />
+        <img class="moose-fire" src="../img/ai/moose2-min.jpg" alt="Moose" />
+        <img class="moose-window" src="../img/ai/moose3-min.jpg" alt="Moose" />
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="../js/jquery-4.0.0.min.js"></script>
+    <script src="../js/app.js?v=1.1"></script>
+    <script src="shack.js?v=1.157"></script>
+
+</body>
+
+</html>

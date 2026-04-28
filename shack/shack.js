@@ -5,7 +5,6 @@ $(function () {
         // console.log("jQuery is NOT loaded.");
     }
 
-
     /* INSTRUCTIONS */
     alert('Secure the room.\n\nUse a mouse or the arrow keys to navigate.\nClick or press [enter] to select.\n\nClick the moose’s heart or press [H] to attack.');
     alert('Don’t trust the moose.');
@@ -86,28 +85,28 @@ $(function () {
             const randomNumber = Math.floor(Math.random() * (7 - 2 + 1)) + 2;
             moose_damage = randomNumber;
 
+            if ($(this).hasClass('door')) {
+                jumpscare1.play();
+                jumpscare.play();
+                $('html').removeClass().addClass('theme-green');
+                $('#moose').removeClass().addClass('attack-door flicker');
+            }
+            if ($(this).hasClass('fire')) {
+                jumpscare2.play();
+                $('html').removeClass().addClass('theme-red');
+                $('#moose').removeClass().addClass('attack-fire flicker');
+            }
+            if ($(this).hasClass('window')) {
+                jumpscare3.play();
+                $('html').removeClass().addClass('theme-blue');
+                $('#moose').removeClass().addClass('attack-window flicker');
+            }
+
             /* DIE IF DON'T KILL MOOSE IN 5 SECONDS */
             startTimer();
         } else {
             alert('You are safe! For now…');
         }
-    });
-
-    $('.door').on('click', function (e) {
-        jumpscare1.play();
-        jumpscare.play();
-        $('html').removeClass().addClass('theme-green');
-        $('#moose').removeClass().addClass('attack-door flicker');
-    });
-    $('.fire').on('click', function (e) {
-        jumpscare2.play();
-        $('html').removeClass().addClass('theme-red');
-        $('#moose').removeClass().addClass('attack-fire flicker');
-    });
-    $('.window').on('click', function (e) {
-        jumpscare3.play();
-        $('html').removeClass().addClass('theme-blue');
-        $('#moose').removeClass().addClass('attack-window flicker');
     });
 
     /* MOOSE HEALTH */

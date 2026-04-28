@@ -1,7 +1,5 @@
 TO DOs: 
-- Deadflame Studio / Monstrous Studio / Dread Night Studio / Dark Flame Studio / Dark Sun Studio / Snakebite Studio / Dark God Studio / Bleeding Sun Studio / Nightmare Brain Studio, Corrupt/Korrupt/Corrupted/Korruptyd/Corruptid/Korruptid Studio, Corrupted Dragon/Kraken Studio
-
-- randomize jump scares so each time play is different, kill the moose health bar click/key, CSS/JS particles
+- Deadflame Studio / Monstrous Studio / Dread Night Studio / Dark Flame Studio / Dark Sun Studio / Snakebite Studio / Dark God Studio / Bleeding Sun Studio / Nightmare Brain Studio, Corrupt/Korrupt/Corrupted/Korruptyd/Korruptid Studio, Corrupted Dragon/Kraken Studio
 
 - Inventory icon equip weapons/VHS/puzzles, treasure chest with lock combo, powerbox breaks, fire smoke
 

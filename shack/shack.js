@@ -1,13 +1,11 @@
 $(function () {
-    if (typeof jQuery !== 'undefined') {
-        // console.log("jQuery is loaded!");
-    } else {
-        // console.log("jQuery is NOT loaded.");
-    }
 
     /* INSTRUCTIONS */
-    alert('Secure the room.\n\nUse a mouse or the arrow keys to navigate.\nClick or press [enter] to select.\n\nClick the moose’s heart or press [H] to attack.');
+    alert('Secure the room.\n\nUse a mouse or the arrow keys to navigate.\nClick or press [enter] to select.\n\nClick the moose’s heart or press [H] to attack.\n\nKill the moose 5 times to win.');
     alert('Don’t trust the moose.');
+    setTimeout(() => {
+        $('body').addClass('loaded');
+    }, 250);
 
 
     /* CONTROLS */
@@ -42,6 +40,7 @@ $(function () {
     });
 
     /* INTERACTIONS FOR JUMP SCARES */
+    var moose_kills = 0;
     var moose_health = 100;
     var moose_damage = 5;
     const jumpscare = new Audio('../sound/pixabay/alex_jauk-sudden-screaming-sound-193070.mp3');
@@ -51,7 +50,6 @@ $(function () {
     let mooseTimer;
 
     function startTimer() {
-        // console.log("Timer started...");
         mooseTimer = setTimeout(() => {
             if (moose_health > 15) {
                 alert('You died!');
@@ -62,7 +60,6 @@ $(function () {
 
     function stopTimer() {
         clearTimeout(mooseTimer);
-        // console.log("Timer stopped!");
     }
 
     $('.wall, .floor, .ceiling').on('click', function (e) {
@@ -140,6 +137,12 @@ $(function () {
             $('.moose-health-bar').removeAttr('style');
             stopTimer();
             alert('You survived!');
+            moose_kills++;
+            $('#kills').text(moose_kills);
+            if (moose_kills == 5) {
+                alert('You won!');
+                window.location.replace('https://writerhaloscot.github.io/skinlessbark/win/');
+            }
         }
     }
 

@@ -6,10 +6,18 @@
     box-sizing: border-box;
 }
 
+html {
+    background: #000;
+}
+
 body {
     position: relative;
     background: #000;
     color: #fff;
+}
+
+body:not(.loaded) {
+    display: none;
 }
 
 .welcome {
@@ -35,11 +43,29 @@ body {
     font-size: 4vw;
 }
 
+.welcome h1.small,
 .welcome h2 {
     font-weight: 400;
     font-size: 3.4vw;
     margin-bottom: 2vw;
     font-style: italic;
+}
+
+.welcome h1.small {
+    font-style: normal;
+    line-height: 100%;
+}
+
+.welcome h1.small span {
+    font-size: inherit;
+    font-style: italic;
+}
+
+.welcome p {
+    font-weight: 400;
+    font-size: 2vw;
+    margin-top: -2vw;
+    margin-bottom: 2vw;
 }
 
 .welcome span {
@@ -76,6 +102,12 @@ body {
     color: #000;
 }
 
+.welcome img {
+    display: block;
+    width: 30vw;
+    height: auto;
+    margin: 0 auto -9vw;
+}
 
 
 /* MOBILE */
@@ -85,8 +117,15 @@ body {
         font-size: 8vw;
     }
 
+    .welcome h1.small,
     .welcome h2 {
         font-size: 6.8vw;
+        margin-bottom: 4vw;
+    }
+
+    .welcome p {
+        font-size: 4vw;
+        margin-top: -4vw;
         margin-bottom: 4vw;
     }
 
@@ -99,5 +138,10 @@ body {
         letter-spacing: 1vw;
         padding: 3vw;
         border-width: 0.4vw;
+    }
+
+    .welcome img {
+        width: 60vw;
+        margin: 0 auto -18vw;
     }
 }

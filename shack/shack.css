@@ -204,6 +204,20 @@ body.dead .cpt {
 }
 
 
+/* KILL COUNTER */
+.counter {
+    white-space: nowrap;
+    text-align: center;
+    position: absolute;
+    z-index: 999;
+    top: -3.4vw;
+    left: 50%;
+    transform: translateX(-50%) translateZ(-5vw);
+    height: fit-content;
+    width: fit-content;
+    background: var(--blk50);
+}
+
 
 /* CONTROLS */
 
@@ -502,6 +516,10 @@ a.moose-heart span {
         margin-top: -10vh;
         font-size: 5vw;
         perspective: 50vw;
+    }
+
+    .counter {
+        top: 15vw;
     }
 
     .controls {

@@ -497,12 +497,13 @@ a.moose-heart span {
 
 @media (max-width: 768px) {
     body {
+        margin-top: -10vh;
         font-size: 5vw;
         perspective: 50vw;
     }
 
     .controls {
-        bottom: 2vw;
+        bottom: 5vw;
         height: 40vw;
         width: 40vw;
     }

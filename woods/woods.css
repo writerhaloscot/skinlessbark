@@ -1,0 +1,123 @@
+/* WOODS */
+:root {}
+
+body {
+    background-color: #000;
+    background-image: url('img/bg/bg-sky-pix-8232229-min.jpg');
+}
+
+body,
+body:after {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+}
+
+body:after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('img/bg/bg-scene-pix-8397000-min.jpg');
+    background-color: transparent;
+    transition: opacity 0.25s ease;
+    opacity: 1;
+}
+
+body:has(img:hover):after,
+body:has(img:focus):after,
+body:has(img:active):after {
+    opacity: 0;
+}
+
+body,
+#woods {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+#woods {
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: center;
+}
+
+#woods img {
+    cursor: pointer;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    max-width: 100%;
+    height: auto;
+    filter: grayscale(100);
+    transition: filter 0.25s ease;
+}
+
+#woods img:hover,
+#woods img:focus,
+#woods img:active {
+    filter: none;
+    outline: 0;
+}
+
+#woods_shack {
+    cursor: pointer;
+    position: absolute;
+    bottom: 20vw;
+    left: 2vw;
+    width: 15vw;
+    height: auto;
+}
+
+
+/* SCENE */
+#scene,
+#props {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#woods_shack:after,
+#scene:after,
+#props:after {
+    content: '';
+    position: absolute;
+    top: 2vw;
+    left: 0;
+    right: 0;
+    height: 5vw;
+    background: #000;
+    filter: blur(5vw);
+}
+
+#scene img {
+    position: relative;
+    z-index: 300;
+    width: 10%;
+    align-self: flex-end;
+    margin-bottom: 3vw;
+}
+
+
+/* PROPS */
+#props img {
+    position: relative;
+    z-index: 300;
+    max-width: calc(100% / 15);
+    max-height: 5vw;
+}

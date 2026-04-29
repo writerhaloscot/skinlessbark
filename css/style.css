@@ -109,6 +109,12 @@ body:not(.loaded) {
     margin: 0 auto -9vw;
 }
 
+.welcome-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75vw;
+}
+
 
 /* MOBILE */
 

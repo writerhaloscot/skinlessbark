@@ -1,3 +1,5 @@
+https://tinyurl.com/skinlessbark
+
 TO DOs: 
 - Deadflame Studio / Monstrous Studio / Dread Night Studio / Dark Flame Studio / Dark Sun Studio / Snakebite Studio / Dark God Studio / Bleeding Sun Studio / Nightmare Brain Studio, Corrupt/Korrupt/Corrupted/Korruptyd/Korruptid Studio, Corrupted Dragon/Kraken Studio
 

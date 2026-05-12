@@ -39,25 +39,6 @@
             GLTFLoader
         } from 'three/addons/loaders/GLTFLoader.js';
 
-        // Keyboard
-        const keys = {
-            w: false,
-            a: false,
-            s: false,
-            d: false
-        };
-
-        window.addEventListener('keydown', (e) => {
-            if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = true;
-        });
-
-        window.addEventListener('keyup', (e) => {
-            if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = false;
-        });
-
-        const moveSpeed = 0.1;
-
-
         // Scene
         const scene = new THREE.Scene();
 
@@ -69,14 +50,21 @@
 
         // Renderer
         const renderer = new THREE.WebGLRenderer({
+            alpha: false,
+            powerPreference: "high-performance",
             antialias: true
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        // renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         document.body.appendChild(renderer.domElement);
 
         // Controls
         const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.rotateSpeed = 0.5;
+        controls.zoomSpeed = 0.5;
 
         // Lighting
         const ambientLight = new THREE.AmbientLight(0x404040);
@@ -88,7 +76,7 @@
 
         // Mesh
         const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const skin = new THREE.MeshStandardMaterial({
+        const skin = new THREE.MeshLambertMaterial({
             color: 0x000000
         });
         const cube = new THREE.Mesh(geometry, skin);
@@ -104,8 +92,8 @@
         // Room
         const frame = new THREE.BoxGeometry(20, 20, 20);
         const textureLoader = new THREE.TextureLoader();
-        const wallTexture = textureLoader.load('../img/pixabay/pexels-rock-wall-1845128-min.jpg')
-        const material = new THREE.MeshStandardMaterial({
+        const wallTexture = textureLoader.load('../img/pixabay/pexels-rock-wall-1845128-min-min.jpg')
+        const material = new THREE.MeshLambertMaterial({
             color: 0xB0B0B0,
             map: wallTexture,
             side: THREE.BackSide // Essential to see the inside
@@ -125,18 +113,9 @@
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
-
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
             controls.update();
-            renderer.render(scene, camera);
-            /* 
-                        if (keys.w) camera.position.z -= moveSpeed; // Move Forward
-                        if (keys.s) camera.position.z += moveSpeed; // Move Backward
-                        if (keys.a) camera.position.x -= moveSpeed; // Move Left
-                        if (keys.d) camera.position.x += moveSpeed; // Move Right
-
-                    */
             camera.position.clamp(min, max);
             renderer.render(scene, camera);
         }
@@ -156,6 +135,29 @@
             });
             console.log('loaded')
         }
+
+        // Clickable Model
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        window.addEventListener('click', (event) => {
+            // 1. Calculate normalized mouse position
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // 2. Update the ray with the camera and mouse position
+            raycaster.setFromCamera(mouse, camera);
+
+            // 3. Calculate objects intersecting the picking ray
+            // Set recursive to 'true' to check all children of the loaded model
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                console.log('Clicked on:', intersects[0].object);
+                // Perform action here, e.g., change color
+                intersects[0].object.material.color.set(0x00ff00);
+            }
+        });
 
     </script>
 

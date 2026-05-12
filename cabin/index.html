@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-gray">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Cabin | Skinless Bark | Dread Night Studio</title>
+    <meta name="description" content="Cabin | Skinless Bark | Dread Night Studio" />
+    <meta property="og:title" content="Cabin | Skinless Bark | Dread Night Studio">
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://writerhaloscot.github.io/skinlessbark/img/ai/thumb-moose-min.jpg">
+    <meta property="og:url" content="/skinlessbark/cabin">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Cabin | Skinless Bark | Dread Night Studio">
+    <meta property="og:site_name" content="Cabin | Skinless Bark | Dread Night Studio">
+    <meta name="twitter:image:alt" content="Cabin | Skinless Bark | Dread Night Studio">
+
+    <link rel="shortcut icon" type="image/svg+xml" href="../img/pixabay-antlers-7405606.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="cabin.css?v=1.172" />
+
+    <!-- USE IN MAMP LOCAL SERVER -->
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/"
+          }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import {
+            OrbitControls
+        } from 'three/addons/controls/OrbitControls.js';
+        import {
+            GLTFLoader
+        } from 'three/addons/loaders/GLTFLoader.js';
+
+        // Keyboard
+        const keys = {
+            w: false,
+            a: false,
+            s: false,
+            d: false
+        };
+
+        window.addEventListener('keydown', (e) => {
+            if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (keys.hasOwnProperty(e.key.toLowerCase())) keys[e.key.toLowerCase()] = false;
+        });
+
+        const moveSpeed = 0.1;
+
+
+        // Scene
+        const scene = new THREE.Scene();
+
+        // Camera
+        const min = new THREE.Vector3(-10, 1, -10); // Room Min
+        const max = new THREE.Vector3(10, 1, 10); // Room Max
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        // Mesh
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const skin = new THREE.MeshStandardMaterial({
+            color: 0x000000
+        });
+        const cube = new THREE.Mesh(geometry, skin);
+        scene.add(cube);
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Room
+        const frame = new THREE.BoxGeometry(20, 20, 20);
+        const textureLoader = new THREE.TextureLoader();
+        const wallTexture = textureLoader.load('../img/pixabay/pexels-rock-wall-1845128-min.jpg')
+        const material = new THREE.MeshStandardMaterial({
+            color: 0xB0B0B0,
+            map: wallTexture,
+            side: THREE.BackSide // Essential to see the inside
+            // side: THREE.DoubleSide // Optional: visible from both sides
+        });
+        const room = new THREE.Mesh(frame, material);
+        scene.add(room);
+
+        // Light
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(0, 3, 0);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040)); // Soft white light
+
+        // camera.position.z = 0.1; // Stay inside the box
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            controls.update();
+            renderer.render(scene, camera);
+            /* 
+                        if (keys.w) camera.position.z -= moveSpeed; // Move Forward
+                        if (keys.s) camera.position.z += moveSpeed; // Move Backward
+                        if (keys.a) camera.position.x -= moveSpeed; // Move Left
+                        if (keys.d) camera.position.x += moveSpeed; // Move Right
+
+                    */
+            camera.position.clamp(min, max);
+            renderer.render(scene, camera);
+        }
+        renderer.setAnimationLoop(animate);
+
+
+        // Load GLB
+        const loader = new GLTFLoader();
+        load_model('models/pix-quaternius_cc0-stag-1373.glb', -1, -1, -1, 1);
+
+        function load_model(m, x, y, z, s) {
+            loader.load(m, (gltf) => {
+                const model = gltf.scene;
+                model.position.set(x, y, z);
+                model.scale.set(s, s, s);
+                scene.add(model);
+            });
+            console.log('loaded')
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+</body>
+
+</html>

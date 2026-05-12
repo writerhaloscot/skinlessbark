@@ -1,0 +1,36 @@
+/* CHASE */
+:root {}
+
+/* CSS Styling */
+.forest {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100svh;
+    perspective: 25vw;
+    overflow: hidden;
+    background: #000;
+    transform-style: preserve-3d;
+}
+
+.path {
+    position: absolute;
+    z-index: 0;
+    width: 40vw;
+    height: 100vh;
+    height: 100svh;
+    background: #333;
+    transform: translateX(-50%) translateZ(0) rotateX(60deg);
+    left: 50%;
+    bottom: 0;
+    font-size: 0;
+}
+
+#player {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateZ(-1vw);
+    transition: bottom 0.25s ease;
+}
